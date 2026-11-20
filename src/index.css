@@ -1,0 +1,211 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Tailwind theme */
+@theme inline {
+  --font-sans: "Geist Variable", sans-serif;
+  --font-mono: "Geist Mono Variable", monospace;
+  --font-heading: var(--font-sans);
+  --color-layout-bg: var(--layout-bg);
+  --color-layout-header: var(--layout-header);
+  --color-layout-card: var(--layout-card);
+  --color-layout-border: var(--layout-border);
+  --color-content-primary: var(--content-primary);
+  --color-content-secondary: var(--content-secondary);
+  --color-content-tertiary: var(--content-tertiary);
+  --color-content-opposite: var(--content-opposite);
+  --color-content-red: var(--content-red);
+  --color-brand-main: var(--brand-main);
+  --color-brand-secondary: var(--brand-secondary);
+  --color-brand-tertiary: var(--brand-tertiary);
+  --color-button-primary-normal: var(--button-primary-normal);
+  --color-button-primary-hover: var(--button-primary-hover);
+  --color-button-primary-disable: var(--button-primary-disable);
+  --color-button-secondary-normal: var(--button-secondary-normal);
+  --color-button-secondary-hover: var(--button-secondary-hover);
+  --color-button-secondary-disable: var(--button-secondary-disable);
+  --color-button-tertiary-normal: var(--button-tertiary-normal);
+  --color-button-tertiary-hover: var(--button-tertiary-hover);
+  --color-button-tertiary-disable: var(--button-tertiary-disable);
+  --color-button-pure-normal: var(--button-pure-normal);
+  --color-button-pure-hover: var(--button-pure-hover);
+  --color-button-pure-disable: var(--button-pure-disable);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-brand: var(--brand);
+  --color-secondary: var(--secondary);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/* Light Mode */
+:root {
+  color-scheme: light;
+
+  /* Color / Layout */
+  --layout-bg: #ffffff;
+  --layout-header: rgb(255 255 255 / 60%);
+  --layout-card: #ffffff;
+  --layout-border: #e5e5e5;
+
+  /* Color / Content */
+  --content-primary: #171717;
+  --content-secondary: #737373;
+  --content-tertiary: #a6a6a6;
+  --content-opposite: #fafafa;
+
+  /* Color / Components / Button / Primary */
+  --button-primary-normal: #0a0a0a;
+  --button-primary-hover: #171717;
+  --button-primary-disable: rgb(23 23 23 / 50%);
+
+  /* Color / Components / Button / Secondary */
+  --button-secondary-normal: #ffffff;
+  --button-secondary-hover: #fafafa;
+  --button-secondary-disable: #8b8b8b;
+
+  /* Color / Components / Button / Tertiary */
+  --button-tertiary-normal: #e5e5e5;
+  --button-tertiary-hover: rgb(229 229 229 / 80%);
+  --button-tertiary-disable: rgb(229 229 229 / 25%);
+
+  /* Color / Components / Button / Pure */
+  --button-pure-normal: rgb(229 229 229 / 0%);
+  --button-pure-hover: #e5e5e5;
+  --button-pure-disable: rgb(229 229 229 / 25%);
+
+  /* Additional shadcn colors */
+  --muted: #f5f5f5;
+  --radius: 0.625rem;
+}
+
+/* Dark Mode */
+.dark {
+  color-scheme: dark;
+
+  /* Color / Layout */
+  --layout-bg: #0a0a0a;
+  --layout-header: rgb(10 10 10 / 60%);
+  --layout-card: #0a0a0a;
+  --layout-border: #262626;
+
+  /* Color / Content */
+  --content-primary: #fafafa;
+  --content-secondary: #a3a3a3;
+  --content-tertiary: #575757;
+  --content-opposite: #171717;
+
+  /* Color / Components / Button / Primary */
+  --button-primary-normal: #fafafa;
+  --button-primary-hover: rgb(250 250 250 / 90%);
+  --button-primary-disable: rgb(250 250 250 / 50%);
+
+  /* Color / Components / Button / Secondary */
+  --button-secondary-normal: #0a0a0a;
+  --button-secondary-hover: #171717;
+  --button-secondary-disable: rgb(23 23 23 / 50%);
+
+  /* Color / Components / Button / Tertiary */
+  --button-tertiary-normal: #262626;
+  --button-tertiary-hover: rgb(38 38 38 / 80%);
+  --button-tertiary-disable: rgb(38 38 38 / 25%);
+
+  /* Color / Components / Button / Pure */
+  --button-pure-normal: rgb(38 38 38 / 0%);
+  --button-pure-hover: #262626;
+  --button-pure-disable: rgb(38 38 38 / 25%);
+
+  /* Additional shadcn colors */
+  --muted: #262626;
+}
+
+/* Shared design tokens and shadcn aliases */
+:root,
+.dark {
+  --brand-main: #3b82f6;
+  --brand-secondary: #7e97c0;
+  --brand-tertiary: #8d9cb5;
+  --content-red: #ef4444;
+
+  --background: var(--layout-bg);
+  --foreground: var(--content-primary);
+  --card: var(--layout-card);
+  --card-foreground: var(--content-primary);
+  --popover: var(--layout-card);
+  --popover-foreground: var(--content-primary);
+  --primary: var(--button-primary-normal);
+  --primary-foreground: var(--content-opposite);
+  --secondary-foreground: var(--content-primary);
+  --muted-foreground: var(--content-secondary);
+  --accent-foreground: var(--content-primary);
+  --destructive: var(--content-red);
+  --border: var(--layout-border);
+  --input: var(--layout-border);
+  --sidebar: var(--layout-bg);
+  --sidebar-foreground: var(--content-primary);
+  --sidebar-primary: var(--content-primary);
+  --sidebar-primary-foreground: var(--content-opposite);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--content-primary);
+  --sidebar-border: var(--layout-border);
+  --sidebar-ring: var(--ring);
+  --brand: var(--brand-main);
+  --chart-1: var(--brand-main);
+  --chart-2: var(--brand-secondary);
+  --chart-3: var(--brand-tertiary);
+  --chart-4: var(--content-secondary);
+  --chart-5: var(--content-red);
+  --accent: var(--muted);
+  --ring: var(--brand-main);
+  --secondary: var(--button-tertiary-normal);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
