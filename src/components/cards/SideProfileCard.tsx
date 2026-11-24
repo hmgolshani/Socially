@@ -1,6 +1,7 @@
 import type { User } from "@/types/post.ts";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
+import { MapPinIcon, LinkIcon } from "lucide-react";
 
 type ProfileUser = User & {
   followers: number;
@@ -52,6 +53,17 @@ const SideProfileCard = ({ user }: SideProfileCardProps) => {
       </div>
 
       <Separator className="my-4 bg-layout-border" />
+      <div className="flex flex-col gap-3">
+        <div className="flex items-center gap-2 text-sm text-content-secondary">
+          <MapPinIcon className="size-4 shrink-0" />
+          <span className="truncate">{user.location || "No location"}</span>
+        </div>
+
+        <div className="flex items-center gap-2 text-sm text-content-secondary">
+          <LinkIcon className="size-4 shrink-0" />
+          <span className="truncate">{user.website || "No website"}</span>
+        </div>
+      </div>
     </div>
   );
 };
