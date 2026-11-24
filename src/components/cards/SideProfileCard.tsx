@@ -34,7 +34,7 @@ const SideProfileCard = ({ user }: SideProfileCardProps) => {
       </div>
       <Separator className="my-4 bg-layout-border" />
 
-      <div className="grid grid-cols-2 text-center">
+      <div className="flex justify-between text-center">
         <div className="flex flex-col gap-1">
           <span className="text-sm font-semibold text-content-primary">
             {user.following}
