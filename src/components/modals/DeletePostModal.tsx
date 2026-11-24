@@ -34,9 +34,8 @@ const DeletePostModal = ({
 
         <AlertDialogFooter className="mx-0 mb-0 flex-row justify-end rounded-none border-0 bg-transparent p-0">
           <AlertDialogCancel
-            variant="secondary"
             size="lg"
-            className="border-layout-border bg-button-secondary-normal px-3 text-content-primary transition-none hover:bg-button-secondary-hover active:not-aria-[haspopup]:translate-y-0"
+            className="px-3 transition-none active:not-aria-[haspopup]:translate-y-0"
           >
             Cancel
           </AlertDialogCancel>

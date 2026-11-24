@@ -8,12 +8,18 @@ import { Textarea } from "@/components/ui/textarea";
 type AddPostCardProps = {
   name: string;
   image?: string;
+  onSubmit?: (content: string) => void;
 };
 
-const AddPostCard = ({ name, image }: AddPostCardProps) => {
+const AddPostCard = ({ name, image, onSubmit }: AddPostCardProps) => {
   const [content, setContent] = useState("");
 
   const isEmpty = content.trim().length === 0;
+
+  const handleSubmit = () => {
+    onSubmit?.(content.trim());
+    setContent("");
+  };
 
   return (
     <div className="rounded-xl border border-layout-border bg-layout-card p-6">
@@ -27,6 +33,7 @@ const AddPostCard = ({ name, image }: AddPostCardProps) => {
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder="What's on your mind?"
+          aria-label="Write a post"
           className="min-h-25 resize-none rounded-none border-0 bg-transparent p-0 pt-1 text-content-primary shadow-none placeholder:text-content-secondary focus-visible:ring-0 dark:bg-transparent"
         />
       </div>
@@ -37,7 +44,8 @@ const AddPostCard = ({ name, image }: AddPostCardProps) => {
         <Button
           size="lg"
           disabled={isEmpty}
-          className="bg-button-primary-normal px-3 text-content-opposite transition-none hover:bg-button-primary-hover active:not-aria-[haspopup]:translate-y-0 disabled:bg-button-primary-disable disabled:opacity-100"
+          onClick={handleSubmit}
+          className="px-3 transition-none hover:bg-button-primary-hover active:not-aria-[haspopup]:translate-y-0"
         >
           <SendIcon />
           Post

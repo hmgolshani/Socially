@@ -18,6 +18,7 @@ type PostCardProps = {
   post: Post;
   currentUser?: User;
   onDelete?: (id: string) => void;
+  onComment?: (id: string, content: string) => void;
 };
 
 const UserAvatar = ({ user }: { user: User }) => {
@@ -61,9 +62,14 @@ const CommentItem = ({ comment }: { comment: Comment }) => {
 };
 
 const actionClassName =
-  "h-8 min-w-14 justify-start gap-2 border-0 bg-button-pure-normal px-2 text-content-primary tabular-nums transition-none hover:bg-button-pure-hover focus-visible:border-transparent focus-visible:bg-button-pure-hover focus-visible:ring-0 active:not-aria-[haspopup]:translate-y-0";
+  "min-w-14 justify-start gap-2 px-2 tabular-nums transition-none active:not-aria-[haspopup]:translate-y-0";
 
-const PostCard = ({ post, currentUser, onDelete }: PostCardProps) => {
+const PostCard = ({
+  post,
+  currentUser,
+  onDelete,
+  onComment,
+}: PostCardProps) => {
   const [isLiked, setIsLiked] = useState(post.isLiked);
   const [likes, setLikes] = useState(post.likes);
   const [showComments, setShowComments] = useState(false);
@@ -75,6 +81,11 @@ const PostCard = ({ post, currentUser, onDelete }: PostCardProps) => {
   const handleLike = () => {
     setLikes((prev) => (isLiked ? prev - 1 : prev + 1));
     setIsLiked((prev) => !prev);
+  };
+
+  const handleComment = () => {
+    onComment?.(post.id, comment.trim());
+    setComment("");
   };
 
   const handleDelete = () => {
@@ -93,10 +104,11 @@ const PostCard = ({ post, currentUser, onDelete }: PostCardProps) => {
 
             {isOwner && (
               <Button
+                variant="destructive"
                 size="icon-sm"
                 aria-label="Delete post"
                 onClick={() => setIsDeleteOpen(true)}
-                className="border-0 bg-button-pure-normal text-content-secondary transition-none hover:bg-content-red/15 hover:text-content-red active:not-aria-[haspopup]:translate-y-0"
+                className="transition-none active:not-aria-[haspopup]:translate-y-0"
               >
                 <Trash2Icon />
               </Button>
@@ -111,12 +123,12 @@ const PostCard = ({ post, currentUser, onDelete }: PostCardProps) => {
 
       <div className="mt-4 flex gap-4">
         <Button
+          variant="ghost"
           aria-pressed={isLiked}
           onClick={handleLike}
           className={cn(
             actionClassName,
-            isLiked &&
-              "bg-button-tertiary-normal text-content-red hover:bg-button-tertiary-hover",
+            isLiked && "bg-muted text-content-red hover:text-content-red",
           )}
         >
           <HeartIcon className={cn(isLiked && "fill-content-red")} />
@@ -124,13 +136,10 @@ const PostCard = ({ post, currentUser, onDelete }: PostCardProps) => {
         </Button>
 
         <Button
+          variant="ghost"
           aria-expanded={showComments}
           onClick={() => setShowComments((prev) => !prev)}
-          className={cn(
-            actionClassName,
-            showComments &&
-              "bg-button-tertiary-normal text-brand-main hover:bg-button-tertiary-hover",
-          )}
+          className={cn(actionClassName, "aria-expanded:text-brand-main")}
         >
           <MessageCircleIcon
             className={cn(showComments && "fill-brand-main")}
@@ -156,6 +165,7 @@ const PostCard = ({ post, currentUser, onDelete }: PostCardProps) => {
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
                     placeholder="Write a comment..."
+                    aria-label="Write a comment"
                     className="min-h-25 resize-none rounded-sm border-layout-border bg-transparent text-content-primary placeholder:text-content-secondary dark:bg-transparent"
                   />
                 </div>
@@ -164,7 +174,8 @@ const PostCard = ({ post, currentUser, onDelete }: PostCardProps) => {
                   <Button
                     size="lg"
                     disabled={comment.trim().length === 0}
-                    className="bg-button-primary-normal px-3 text-content-opposite transition-none hover:bg-button-primary-hover active:not-aria-[haspopup]:translate-y-0 disabled:bg-button-primary-disable disabled:opacity-100"
+                    onClick={handleComment}
+                    className="px-3 transition-none hover:bg-button-primary-hover active:not-aria-[haspopup]:translate-y-0"
                   >
                     <SendIcon />
                     Comment
