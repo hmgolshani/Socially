@@ -1,5 +1,6 @@
 import type { User } from "@/types/post.ts";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Separator } from "@/components/ui/separator";
 
 type ProfileUser = User & {
   followers: number;
@@ -30,6 +31,27 @@ const SideProfileCard = ({ user }: SideProfileCardProps) => {
 
         <p className="text-xs text-content-secondary">{user.username}</p>
       </div>
+      <Separator className="my-4 bg-layout-border" />
+
+      <div className="grid grid-cols-2 text-center">
+        <div className="flex flex-col gap-1">
+          <span className="text-sm font-semibold text-content-primary">
+            {user.following}
+          </span>
+
+          <span className="text-xs text-content-secondary">Following</span>
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <span className="text-sm font-semibold text-content-primary">
+            {user.followers}
+          </span>
+
+          <span className="text-xs text-content-secondary">Followers</span>
+        </div>
+      </div>
+
+      <Separator className="my-4 bg-layout-border" />
     </div>
   );
 };
