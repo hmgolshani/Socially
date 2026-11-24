@@ -23,10 +23,15 @@ const SideProfileCard = ({ user }: SideProfileCardProps) => {
         </AvatarFallback>
       </Avatar>
 
-      <p>{user.name}</p>
-      <p>{user.username}</p>
+      <div className="mt-3 flex flex-col items-center gap-1 text-center">
+        <p className="text-sm font-semibold text-content-primary">
+          {user.name}
+        </p>
+
+        <p className="text-xs text-content-secondary">{user.username}</p>
+      </div>
     </div>
-  );    
+  );
 };
 
 export default SideProfileCard;
