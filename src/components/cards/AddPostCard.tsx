@@ -16,9 +16,9 @@ const AddPostCard = ({ name, image }: AddPostCardProps) => {
   const isEmpty = content.trim().length === 0;
 
   return (
-    <div className="rounded-xl border border-layout-border bg-layout-card p-4">
-      <div className="flex gap-3">
-        <Avatar>
+    <div className="rounded-xl border border-layout-border bg-layout-card p-6">
+      <div className="flex gap-4">
+        <Avatar size="lg">
           <AvatarImage src={image} alt={name} />
           <AvatarFallback>{name.charAt(0).toUpperCase()}</AvatarFallback>
         </Avatar>
@@ -27,11 +27,11 @@ const AddPostCard = ({ name, image }: AddPostCardProps) => {
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder="What's on your mind?"
-          className="min-h-20 resize-none rounded-none border-0 bg-transparent p-0 pt-1 text-content-primary shadow-none placeholder:text-content-secondary focus-visible:ring-0 dark:bg-transparent"
+          className="min-h-25 resize-none rounded-none border-0 bg-transparent p-0 pt-1 text-content-primary shadow-none placeholder:text-content-secondary focus-visible:ring-0 dark:bg-transparent"
         />
       </div>
 
-      <Separator className="my-3 bg-layout-border" />
+      <Separator className="my-4 bg-layout-border" />
 
       <div className="flex justify-end">
         <Button
