@@ -3,11 +3,11 @@ import type { FormEvent } from "react";
 import { X } from "lucide-react";
 
 import {
-  AlertDialog,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
@@ -59,17 +59,17 @@ function EditProfileForm({
   return (
     <>
       <div className="mb-6 flex items-center justify-between">
-        <AlertDialogTitle className="text-xl font-semibold text-content-primary">
+        <DialogTitle className="text-xl font-semibold text-content-primary">
           Edit Profile
-        </AlertDialogTitle>
-        <AlertDialogCancel
+        </DialogTitle>
+        <DialogClose
           aria-label="Close"
-          className="size-8 rounded-md"
-          size="icon"
-          variant="ghost"
+          render={
+            <Button className="size-8 rounded-md" size="icon" variant="ghost" />
+          }
         >
           <X aria-hidden="true" className="size-4" />
-        </AlertDialogCancel>
+        </DialogClose>
       </div>
 
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
@@ -147,8 +147,11 @@ export default function EditProfileModal({
   const close = () => onOpenChange(false);
 
   return (
-    <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent className="max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] gap-0 overflow-y-auto rounded-lg border border-layout-border bg-layout-card p-6 text-content-primary shadow-lg ring-0 data-[size=default]:max-w-[calc(100%-2rem)] data-[size=default]:sm:max-w-125 data-open:animate-none data-closed:animate-none">
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent
+        showCloseButton={false}
+        className="max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-[calc(100%-2rem)] gap-0 overflow-y-auto rounded-lg border border-layout-border bg-layout-card p-6 text-content-primary shadow-lg ring-0 sm:max-w-125 data-open:animate-none data-closed:animate-none"
+      >
         {open && (
           <EditProfileForm
             initialValues={initialValues}
@@ -156,7 +159,7 @@ export default function EditProfileModal({
             onClose={close}
           />
         )}
-      </AlertDialogContent>
-    </AlertDialog>
+      </DialogContent>
+    </Dialog>
   );
 }
