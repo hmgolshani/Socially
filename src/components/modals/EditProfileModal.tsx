@@ -1,7 +1,13 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { useId, useState } from "react";
 import type { FormEvent } from "react";
 import { X } from "lucide-react";
 
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
@@ -22,14 +28,12 @@ type EditProfileModalProps = {
 };
 
 type EditProfileFormProps = {
-  titleId: string;
   initialValues?: Partial<EditProfileValues>;
   onSave: (values: EditProfileValues) => void;
   onClose: () => void;
 };
 
 function EditProfileForm({
-  titleId,
   initialValues,
   onSave,
   onClose,
@@ -55,19 +59,17 @@ function EditProfileForm({
   return (
     <>
       <div className="mb-6 flex items-center justify-between">
-        <h2 className="text-xl font-semibold text-content-primary" id={titleId}>
+        <AlertDialogTitle className="text-xl font-semibold text-content-primary">
           Edit Profile
-        </h2>
-        <Button
+        </AlertDialogTitle>
+        <AlertDialogCancel
           aria-label="Close"
           className="size-8 rounded-md"
           size="icon"
-          type="button"
           variant="ghost"
-          onClick={onClose}
         >
           <X aria-hidden="true" className="size-4" />
-        </Button>
+        </AlertDialogCancel>
       </div>
 
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
@@ -106,7 +108,7 @@ function EditProfileForm({
         </Field>
 
         <Field className="gap-2">
-          <FieldLabel htmlFor={`${id}-website`}>Name</FieldLabel>
+          <FieldLabel htmlFor={`${id}-website`}>Website</FieldLabel>
           <Input
             autoComplete="url"
             className="h-9 rounded-md"
@@ -142,48 +144,19 @@ export default function EditProfileModal({
   initialValues,
   onSave,
 }: EditProfileModalProps) {
-  const dialogRef = useRef<HTMLDialogElement>(null);
-  const id = useId();
-
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) return;
-
-    if (open && !dialog.open) dialog.showModal();
-    if (!open && dialog.open) dialog.close();
-  }, [open]);
-
   const close = () => onOpenChange(false);
 
   return (
-    <dialog
-      ref={dialogRef}
-      aria-labelledby={`${id}-title`}
-      className="m-auto max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-[500px] overflow-y-auto rounded-lg border border-layout-border bg-layout-card p-6 text-content-primary shadow-lg backdrop:backdrop-blur-sm backdrop:backdrop-brightness-50"
-      onCancel={(event) => {
-        event.preventDefault();
-        close();
-      }}
-      onClose={close}
-      onClick={(event) => {
-        const bounds = event.currentTarget.getBoundingClientRect();
-        const clickedOutside =
-          event.clientX < bounds.left ||
-          event.clientX > bounds.right ||
-          event.clientY < bounds.top ||
-          event.clientY > bounds.bottom;
-
-        if (clickedOutside) close();
-      }}
-    >
-      {open && (
-        <EditProfileForm
-          titleId={`${id}-title`}
-          initialValues={initialValues}
-          onSave={onSave}
-          onClose={close}
-        />
-      )}
-    </dialog>
+    <AlertDialog open={open} onOpenChange={onOpenChange}>
+      <AlertDialogContent className="max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] gap-0 overflow-y-auto rounded-lg border border-layout-border bg-layout-card p-6 text-content-primary shadow-lg ring-0 data-[size=default]:max-w-[calc(100%-2rem)] data-[size=default]:sm:max-w-125 data-open:animate-none data-closed:animate-none">
+        {open && (
+          <EditProfileForm
+            initialValues={initialValues}
+            onSave={onSave}
+            onClose={close}
+          />
+        )}
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }
