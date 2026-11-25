@@ -18,6 +18,7 @@ const Layout = () => {
 
   const {pathname} = useLocation();
   const isNotificationsPage = pathname === "/notifications";
+  const showRecommendedUsers = isAuthenticated && !isNotificationsPage;
 
   //TODO top-20 after header
 
@@ -42,7 +43,7 @@ const Layout = () => {
 
         <aside className="hidden xl:block">
           <div className="sticky">
-            {!isNotificationsPage && <RecommendedUserCard />}
+            {showRecommendedUsers && <RecommendedUserCard />}
           </div>
         </aside>
       </div>
