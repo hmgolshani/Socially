@@ -2,6 +2,7 @@ import { useState } from "react";
 import AddPostCard from "@/components/cards/AddPostCard.tsx";
 import PostCard from "@/components/cards/PostCard.tsx";
 import type { Post, User } from "@/types/post.ts";
+import { hoursAgo } from "@/lib/date.ts";
 import farshadImage from "@/assets/images/farshad.png";
 import samRadioImage from "@/assets/images/sam-radio.png";
 import defaultAvatar from "@/assets/images/default-avatar.png";
@@ -12,9 +13,6 @@ const currentUser: User = {
   username: "a.mousavi",
   image: userAvatar,
 };
-
-const hoursAgo = (hours: number) =>
-  new Date(Date.now() - hours * 60 * 60 * 1000).toISOString();
 
 const fakePosts: Post[] = [
   {
