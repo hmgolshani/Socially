@@ -88,6 +88,11 @@ const PostCard = ({
     setComment("");
   };
 
+  const handleCancelComment = () => {
+    setComment("");
+    setShowComments(false);
+  };
+
   const handleDelete = () => {
     onDelete?.(post.id);
     setIsDeleteOpen(false);
@@ -170,7 +175,15 @@ const PostCard = ({
                   />
                 </div>
 
-                <div className="flex justify-end">
+                <div className="flex justify-end gap-2">
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    onClick={handleCancelComment}
+                    className="px-3 transition-none active:not-aria-[haspopup]:translate-y-0"
+                  >
+                    Cancel
+                  </Button>
                   <Button
                     size="lg"
                     disabled={comment.trim().length === 0}
