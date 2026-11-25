@@ -23,15 +23,17 @@ const UserCard = ({ user }: UserCardProps) => {
   return (
     <div className="flex items-center justify-between gap-3">
       <div className="flex min-w-0 items-center gap-2">
-        <Avatar className="size-10">
-          <AvatarImage src={user.image} alt={user.username} />
+        <Avatar className="size-10 shrink-0">
+          <AvatarImage src={user.image } alt={user.username} />
           <AvatarFallback className="bg-brand-main text-xl text-content-opposite">
             {user.username.charAt(0).toUpperCase()}
           </AvatarFallback>
         </Avatar>
         <div className="flex min-w-0 flex-col">
           {user.name && (
-            <span className="text-xs text-content-primary">{user.name}</span>
+            <span className="truncate text-xs text-content-primary">
+              {user.name}
+            </span>
           )}
 
           <span className="text-xs text-content-secondary">{`@${user.username}`}</span>

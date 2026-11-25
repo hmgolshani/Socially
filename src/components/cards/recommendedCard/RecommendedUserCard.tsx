@@ -15,7 +15,7 @@ const recommendedUsers: RecommendedUser[] = [
 const RecommendedUserCard = () => {
   return (
     <div className="rounded-xl border border-layout-border bg-layout-card p-6">
-      <h3 className="pb-3 font-bold text-content-primary">Who to Follow</h3>
+      <h3 className="pb-3 font-semibold text-content-primary">Who to Follow</h3>
       <div className="flex flex-col gap-2.5">
         {recommendedUsers.map((user) => (
           <UserCard key={user.username} user={user} />
