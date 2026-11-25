@@ -19,3 +19,6 @@ export const formatTimeAgo = (date: string) => {
 
   return "just now";
 };
+
+export const hoursAgo = (hours: number) =>
+  new Date(Date.now() - hours * 60 * 60 * 1000).toISOString();
