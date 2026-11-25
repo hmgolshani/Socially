@@ -25,10 +25,10 @@ const DeletePostModal = ({
       <AlertDialogContent className="gap-4 rounded-lg border border-layout-border bg-layout-bg p-6 shadow-lg ring-0 data-[size=default]:max-w-[calc(100%-2rem)] data-[size=default]:sm:max-w-125 data-open:animate-none data-closed:animate-none">
         <AlertDialogHeader className="place-items-start gap-4 text-left">
           <AlertDialogTitle className="text-base font-semibold text-content-primary">
-            Delete Post
+            Delete this post?
           </AlertDialogTitle>
           <AlertDialogDescription className="text-sm text-content-primary">
-            This Action Can not be undone
+            You won't be able to get it back.
           </AlertDialogDescription>
         </AlertDialogHeader>
 
