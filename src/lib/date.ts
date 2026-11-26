@@ -13,7 +13,7 @@ export const formatTimeAgo = (date: string) => {
 
   for (const [unit, value] of units) {
     if (Math.abs(seconds) >= value) {
-      return rtf.format(Math.round(seconds / value), unit);
+      return rtf.format(Math.trunc(seconds / value), unit);
     }
   }
 
