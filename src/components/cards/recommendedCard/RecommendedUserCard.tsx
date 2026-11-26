@@ -1,5 +1,6 @@
 import UserCard, { type RecommendedUser } from "@/components/cards/recommendedCard/UserCard.tsx";
 import farshadImage from "@/assets/images/farshad.png";
+import UserCardSkeleton from "@/components/skeletons/UserCardSkeleton.tsx";
 
 const recommendedUsers: RecommendedUser[] = [
   { username: "mohammadfallah.w", followers: 1 },
@@ -13,13 +14,17 @@ const recommendedUsers: RecommendedUser[] = [
 ];
 
 const RecommendedUserCard = () => {
+  const isLoading = false;
   return (
     <div className="rounded-xl border border-layout-border bg-layout-card p-6">
       <h3 className="pb-3 font-semibold text-content-primary">Who to Follow</h3>
       <div className="flex flex-col gap-2.5">
-        {recommendedUsers.map((user) => (
-          <UserCard key={user.username} user={user} />
-        ))}
+        {isLoading
+          ? Array.from({ length: 3 } ,(_,index) => (<UserCardSkeleton key={index} />))
+          : recommendedUsers.map((user) => (
+              <UserCard key={user.username} user={user} />
+            ))}
+
       </div>
     </div>
   );
