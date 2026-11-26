@@ -3,10 +3,11 @@ import Header from "@/components/layouts/Header.tsx";
 import SideProfileCard from "@/components/cards/SideProfileCard.tsx";
 import SideSignInCard from "@/components/cards/SideSignInCard.tsx";
 import RecommendedUserCard from "@/components/cards/recommendedCard/RecommendedUserCard.tsx";
+import { cn } from "cn";
 
 const Layout = () => {
   // Delete later :
-  const isAuthenticated = false;
+  const isAuthenticated = true;
 
   const currentUser = {
     name: "Seyed Ali Mousavi",
@@ -37,7 +38,7 @@ const Layout = () => {
           </div>
         </aside>
 
-        <main className="min-w-0">
+        <main className={cn("min-w-0", isNotificationsPage && "md:col-span-2")}>
           <Outlet />
         </main>
 
