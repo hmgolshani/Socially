@@ -34,9 +34,9 @@ export default function UserProfileCard({
   return (
     <article className="w-full rounded-xl border border-layout-border bg-layout-card p-6 shadow-sm">
       <div className="flex flex-col items-center text-center">
-        <Avatar className="size-32 border-2 border-layout-border">
+        <Avatar className="size-28 after:border-0">
           <AvatarImage src={avatarUrl ?? undefined} alt={displayName} />
-          <AvatarFallback className="bg-brand-main text-6xl text-content-opposite">
+          <AvatarFallback className="bg-brand-main text-5xl text-content-opposite">
             {initial || "?"}
           </AvatarFallback>
         </Avatar>
