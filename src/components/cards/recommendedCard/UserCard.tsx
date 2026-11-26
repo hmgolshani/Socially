@@ -1,10 +1,6 @@
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { useState } from "react";
+import UserAvatar from "@/components/ui/UserAvatar.tsx";
 
 export type RecommendedUser = {
   username: string;
@@ -23,12 +19,13 @@ const UserCard = ({ user }: UserCardProps) => {
   return (
     <div className="flex items-center justify-between gap-3">
       <div className="flex min-w-0 items-center gap-2">
-        <Avatar className="size-10 shrink-0">
-          <AvatarImage src={user.image } alt={user.username} />
-          <AvatarFallback className="bg-brand-main text-xl text-content-opposite">
-            {user.username.charAt(0).toUpperCase()}
-          </AvatarFallback>
-        </Avatar>
+        {/*<Avatar className="size-10 shrink-0">*/}
+        {/*  <AvatarImage src={user.image } alt={user.username} />*/}
+        {/*  <AvatarFallback className="bg-brand-main text-xl text-content-opposite">*/}
+        {/*    {user.username.charAt(0).toUpperCase()}*/}
+        {/*  </AvatarFallback>*/}
+        {/*</Avatar>*/}
+        <UserAvatar name={user.name} src={user.image} username={user.username} />
         <div className="flex min-w-0 flex-col">
           {user.name && (
             <span className="truncate text-xs text-content-primary">
