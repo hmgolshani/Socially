@@ -27,8 +27,8 @@ const Layout = () => {
     <div>
       <Header />
 
-      <div className="mx-auto grid max-w-[1256px] grid-cols-1 gap-3 px-4 py-4 md:grid-cols-[180px_minmax(0,1fr)] lg:grid-cols-[220px_minmax(0,1fr)] xl:grid-cols-[294px_550px_356px]">
-        <aside className="hidden md:block">
+      <div className="mx-auto grid max-w-[1256px] grid-cols-1 gap-3 px-4 py-4 md:grid-cols-[1fr] lg:grid-cols-[220px_minmax(0,1fr)] xl:grid-cols-[294px_550px_356px]">
+        <aside className="hidden lg:block">
           <div className="sticky">
             {isAuthenticated ? (
               <SideProfileCard user={currentUser} />
@@ -38,7 +38,7 @@ const Layout = () => {
           </div>
         </aside>
 
-        <main className={cn("min-w-0", isNotificationsPage && "md:col-span-2")}>
+        <main className={cn("min-w-0", isNotificationsPage && "xl:col-span-2")}>
           <Outlet />
         </main>
 
