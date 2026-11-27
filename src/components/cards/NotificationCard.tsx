@@ -1,15 +1,49 @@
-import { HeartIcon, MessageCircleIcon } from "lucide-react";
+import {
+  HeartIcon,
+  type LucideIcon,
+  MessageCircleIcon,
+  UserPlusIcon,
+} from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { formatTimeAgo } from "@/lib/date.ts";
 import { cn } from "@/lib/utils.ts";
-import type { Notification } from "@/types/notification.ts";
+import type { Notification, NotificationType } from "@/types/notification.ts";
 
 type NotificationCardProps = {
   notification: Notification;
 };
 
+const notificationConfig: Record<
+  NotificationType,
+  {
+    icon: LucideIcon;
+    iconClassName: string;
+    actionText: string;
+  }
+> = {
+  like: {
+    icon: HeartIcon,
+    iconClassName: "text-content-red",
+    actionText: "liked your post",
+  },
+  comment: {
+    icon: MessageCircleIcon,
+    iconClassName: "text-brand-main",
+    actionText: "commented on your post",
+  },
+  follow: {
+    icon: UserPlusIcon,
+    iconClassName: "text-emerald-500",
+    actionText: "started following you",
+  },
+};
+
 const NotificationCard = ({ notification }: NotificationCardProps) => {
-  const isComment = notification.type === "comment";
+  const {
+    icon: Icon,
+    iconClassName,
+    actionText,
+  } = notificationConfig[notification.type];
 
   return (
     <div
@@ -31,15 +65,11 @@ const NotificationCard = ({ notification }: NotificationCardProps) => {
       <div className="min-w-0 flex-1 space-y-2">
         <div className="flex items-start justify-between gap-2">
           <div className="flex items-start gap-2 text-sm">
-            {isComment ? (
-              <MessageCircleIcon className="mt-0.5 size-4 shrink-0 text-brand-main" />
-            ) : (
-              <HeartIcon className="mt-0.5 size-4 shrink-0 text-content-red" />
-            )}
+            <Icon className={cn("mt-0.5 size-4 shrink-0", iconClassName)} />
 
             <p className="text-content-primary">
               <span className="font-semibold">{notification.sender.name}</span>{" "}
-              {isComment ? "commented on your post" : "liked your post"}
+              {actionText}
             </p>
           </div>
 
@@ -52,13 +82,15 @@ const NotificationCard = ({ notification }: NotificationCardProps) => {
         </div>
 
         <div className="space-y-2 sm:pl-6">
-          <div className="rounded-md bg-muted/50 px-3 py-2 text-xs text-content-secondary sm:text-sm">
-            <p className="line-clamp-2 break-words">
-              {notification.postContent}
-            </p>
-          </div>
+          {notification.postContent && (
+            <div className="rounded-md bg-muted/50 px-3 py-2 text-xs text-content-secondary sm:text-sm">
+              <p className="line-clamp-2 break-words">
+                {notification.postContent}
+              </p>
+            </div>
+          )}
 
-          {isComment && notification.commentContent && (
+          {notification.type === "comment" && notification.commentContent && (
             <div className="rounded-md bg-button-tertiary-normal px-3 py-2 text-xs text-content-primary sm:text-sm">
               <p className="line-clamp-3 break-words">
                 {notification.commentContent}
