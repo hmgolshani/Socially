@@ -1,76 +1,94 @@
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import type { ComponentProps } from "react";
+import { Link } from "react-router";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Field,
   FieldDescription,
   FieldGroup,
   FieldLabel,
-} from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 
-export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
+export function SignupForm({ className, ...props }: ComponentProps<"div">) {
   return (
-    <Card {...props}>
-      <CardHeader>
-        <CardTitle>Create an account</CardTitle>
-        <CardDescription>
-          Enter your information below to create your account
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form>
-          <FieldGroup>
-            <Field>
-              <FieldLabel htmlFor="name">Full Name</FieldLabel>
-              <Input id="name" type="text" placeholder="John Doe" required />
-            </Field>
-            <Field>
-              <FieldLabel htmlFor="email">Email</FieldLabel>
-              <Input
-                id="email"
-                type="email"
-                placeholder="m@example.com"
-                required
-              />
-              <FieldDescription>
-                We&apos;ll use this to contact you. We will not share your email
-                with anyone else.
-              </FieldDescription>
-            </Field>
-            <Field>
-              <FieldLabel htmlFor="password">Password</FieldLabel>
-              <Input id="password" type="password" required />
-              <FieldDescription>
-                Must be at least 8 characters long.
-              </FieldDescription>
-            </Field>
-            <Field>
-              <FieldLabel htmlFor="confirm-password">
-                Confirm Password
-              </FieldLabel>
-              <Input id="confirm-password" type="password" required />
-              <FieldDescription>Please confirm your password.</FieldDescription>
-            </Field>
-            <FieldGroup>
+    <div className={cn("flex flex-col gap-6", className)} {...props}>
+      <Card className="overflow-hidden p-0">
+        <CardContent className="grid p-0 md:grid-cols-2">
+          <form
+            className="p-6 md:p-8"
+            onSubmit={(event) => event.preventDefault()}
+          >
+            <FieldGroup className="gap-6">
+              <div className="flex flex-col gap-2 text-center">
+                <h1 className="text-2xl font-bold">Create your account</h1>
+                <p className="text-sm text-muted-foreground">
+                  Enter your email below to create your account
+                </p>
+              </div>
+
               <Field>
-                <Button type="submit">Create Account</Button>
-                <Button variant="outline" type="button">
-                  Sign up with Google
-                </Button>
-                <FieldDescription className="px-6 text-center">
-                  Already have an account? <a href="#">Sign in</a>
-                </FieldDescription>
+                <FieldLabel htmlFor="name">Name</FieldLabel>
+                <Input
+                  id="name"
+                  name="name"
+                  type="text"
+                  autoComplete="name"
+                  placeholder="Enter your name"
+                  required
+                />
               </Field>
+
+              <Field>
+                <FieldLabel htmlFor="email">Email</FieldLabel>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  placeholder="m@example.com"
+                  required
+                />
+              </Field>
+
+              <Field>
+                <FieldLabel htmlFor="password">Password</FieldLabel>
+                <Input
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="new-password"
+                  required
+                />
+              </Field>
+
+              <Button type="submit" className="w-full cursor-pointer">
+                Create Account
+              </Button>
+
+              <FieldDescription className="text-center">
+                Already have an account?{" "}
+                <Link
+                  to="/login"
+                  className="underline underline-offset-4 hover:text-foreground"
+                >
+                  Sign in
+                </Link>
+              </FieldDescription>
             </FieldGroup>
-          </FieldGroup>
-        </form>
-      </CardContent>
-    </Card>
-  )
+          </form>
+
+          <div className="hidden bg-muted md:block" aria-hidden="true" />
+        </CardContent>
+      </Card>
+
+      <p className="px-4 text-center text-xs leading-relaxed text-muted-foreground">
+        By clicking continue, you agree to our{" "}
+        <span className="underline underline-offset-4">Terms of Service</span>{" "}
+        and <span className="underline underline-offset-4">Privacy Policy</span>
+        .
+      </p>
+    </div>
+  );
 }
