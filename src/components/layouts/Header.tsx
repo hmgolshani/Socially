@@ -1,9 +1,9 @@
 import { Link, NavLink, type NavLinkRenderProps } from "react-router";
-import { Bell, House, LogOut, UserRound } from "lucide-react";
 import { cn } from "@/lib/utils.ts";
-import { Button } from "@/components/ui/button.tsx";
 import { ModeToggle } from "@/components/ModeToggle.tsx";
 import MobileSidebar from "@/components/layouts/MobileSidebar.tsx";
+import { navItems } from "@/components/layouts/navItems.ts";
+import AuthButton from "@/components/layouts/AuthButton.tsx";
 
 const Header = () => {
   const navLinkClass = ({ isActive }: NavLinkRenderProps) =>
@@ -23,34 +23,20 @@ const Header = () => {
 
         <nav className="hidden items-center gap-6 lg:flex">
           <ModeToggle />
-          <NavLink to="/" className={navLinkClass}>
-            <House size={18} />
-            Home
-          </NavLink>
-          {isAuthenticated ? (
-            <>
-              <NavLink to="/notifications" className={navLinkClass}>
-                <Bell size={18} />
-                Notifications
-              </NavLink>
-              <NavLink to={"/profile/u"} className={navLinkClass}>
-                <UserRound size={18} />
-                Profile
-              </NavLink>
-              <Button
-                variant="ghost"
-                size="icon"
-                aria-label="Logout"
-                className="bg-transparent transition-colors hover:text-destructive"
+          {navItems
+            .filter((item) => !item.requiresAuth || isAuthenticated)
+            .map(({ to, label, icon: Icon }) => (
+              <NavLink
+                key={to}
+                to={to}
+                end={to === "/"}
+                className={navLinkClass}
               >
-                <LogOut size={18} />
-              </Button>
-            </>
-          ) : (
-            <Button nativeButton={false} render={<Link to="/login"></Link>}>
-              Sign in
-            </Button>
-          )}
+                <Icon size={18} />
+                {label}
+              </NavLink>
+            ))}
+          <AuthButton isAuthenticated={isAuthenticated}/>
         </nav>
         <MobileSidebar
           isAuthenticated={isAuthenticated}
