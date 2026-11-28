@@ -15,6 +15,7 @@ export type Post = {
   id: string;
   author: User;
   content: string;
+  image?: string;
   createdAt: string;
   likes: number;
   isLiked: boolean;
