@@ -204,8 +204,12 @@
   }
   html {
     @apply font-sans;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: var(--muted-foreground) transparent;
   }
   body {
     @apply bg-background text-foreground;
   }
 }
+

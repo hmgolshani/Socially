@@ -4,6 +4,7 @@ import SideProfileCard from "@/components/cards/SideProfileCard.tsx";
 import SideSignInCard from "@/components/cards/SideSignInCard.tsx";
 import RecommendedUserCard from "@/components/cards/recommendedCard/RecommendedUserCard.tsx";
 import { cn } from "cn";
+import { BackToTop } from "@/components/ui/back-to-top.tsx";
 
 const Layout = () => {
   // Delete later :
@@ -48,6 +49,7 @@ const Layout = () => {
           </div>
         </aside>
       </div>
+      <BackToTop threshold={400} className="bottom-6 right-6 cursor-pointer" />
     </div>
   );
 };
