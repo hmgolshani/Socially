@@ -2,7 +2,7 @@ import { Link, NavLink, type NavLinkRenderProps } from "react-router";
 import { Bell, House, LogOut, UserRound } from "lucide-react";
 import { cn } from "@/lib/utils.ts";
 import { Button } from "@/components/ui/button.tsx";
-import { ModeToggle } from "@/components/mode-toggle.tsx";
+import { ModeToggle } from "@/components/ModeToggle.tsx";
 import MobileSidebar from "@/components/layouts/MobileSidebar.tsx";
 
 const Header = () => {
@@ -15,8 +15,8 @@ const Header = () => {
     );
   const isAuthenticated = true;
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
+    <header className="sticky top-0 z-50 w-full border-b bg-layout-header backdrop-blur-md">
+      <div className="mx-auto flex h-16 max-w-314 items-center justify-between px-4">
         <Link to="/" className="font-mono text-xl font-bold">
           Socially
         </Link>
@@ -33,7 +33,7 @@ const Header = () => {
                 <Bell size={18} />
                 Notifications
               </NavLink>
-              <NavLink to="/profile/:username" className={navLinkClass}>
+              <NavLink to={"/profile/u"} className={navLinkClass}>
                 <UserRound size={18} />
                 Profile
               </NavLink>
