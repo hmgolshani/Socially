@@ -30,16 +30,23 @@ const AuthorAvatar = ({ user }: { user: User }) => {
 
 const AuthorInfo = ({ user, createdAt }: { user: User; createdAt: string }) => {
   return (
-    <div className="flex min-w-0 flex-wrap items-center gap-x-2">
-      <span className="truncate font-semibold text-content-primary">
-        {user.name}
-      </span>
-      <span className="truncate text-xs text-content-secondary">
+    <div className="min-w-0">
+      <div className="flex items-center gap-2">
+        <span className="truncate font-semibold text-content-primary">
+          {user.name}
+        </span>
+        <span className="hidden truncate text-xs text-content-secondary sm:inline">
+          @{user.username}
+        </span>
+        <span className="hidden text-xs text-content-secondary sm:inline">
+          •
+        </span>
+        <span className="shrink-0 text-xs text-content-secondary">
+          {formatTimeAgo(createdAt)}
+        </span>
+      </div>
+      <span className="block truncate text-xs text-content-secondary sm:hidden">
         @{user.username}
-      </span>
-      <span className="text-xs text-content-secondary">•</span>
-      <span className="text-xs text-content-secondary">
-        {formatTimeAgo(createdAt)}
       </span>
     </div>
   );
@@ -47,7 +54,7 @@ const AuthorInfo = ({ user, createdAt }: { user: User; createdAt: string }) => {
 
 const CommentItem = ({ comment }: { comment: Comment }) => {
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-3 sm:gap-4">
       <AuthorAvatar user={comment.author} />
       <div className="min-w-0 flex-1">
         <AuthorInfo user={comment.author} createdAt={comment.createdAt} />
@@ -99,8 +106,8 @@ const PostCard = ({
   };
 
   return (
-    <div className="rounded-xl border border-layout-border bg-layout-card p-6">
-      <div className="flex gap-4">
+    <div className="rounded-xl border border-layout-border bg-layout-card p-4 sm:p-6">
+      <div className="flex gap-3 sm:gap-4">
         <AuthorAvatar user={post.author} />
 
         <div className="min-w-0 flex-1">
@@ -131,7 +138,7 @@ const PostCard = ({
               src={post.image}
               alt={`Image posted by ${post.author.name}`}
               loading="lazy"
-              className="mt-3 size-80 rounded-xl border border-layout-border object-cover"
+              className="mt-3 aspect-square w-full rounded-xl border border-layout-border object-cover sm:size-80"
             />
           )}
         </div>
@@ -183,7 +190,7 @@ const PostCard = ({
 
             {currentUser && (
               <>
-                <div className="flex gap-4">
+                <div className="flex gap-3 sm:gap-4">
                   <AuthorAvatar user={currentUser} />
                   <Textarea
                     value={comment}
@@ -194,10 +201,10 @@ const PostCard = ({
                   />
                 </div>
 
-                <div className="flex items-center justify-end gap-2">
+                <div className="flex flex-wrap items-center justify-end gap-2">
                   <span
                     className={cn(
-                      "mr-auto text-xs text-content-secondary tabular-nums",
+                      "mr-auto text-xs whitespace-nowrap text-content-secondary tabular-nums",
                       commentLength > 0 &&
                         isCommentTooShort &&
                         "text-content-red",
@@ -207,23 +214,25 @@ const PostCard = ({
                       ? `${commentLength} characters · min ${MIN_CONTENT_LENGTH}`
                       : `${commentLength} characters`}
                   </span>
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    onClick={handleCancelComment}
-                    className="px-3 transition-none active:not-aria-[haspopup]:translate-y-0"
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    size="lg"
-                    disabled={isCommentTooShort}
-                    onClick={handleComment}
-                    className="px-3 transition-none hover:bg-button-primary-hover active:not-aria-[haspopup]:translate-y-0"
-                  >
-                    <SendIcon />
-                    Comment
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      onClick={handleCancelComment}
+                      className="px-3 transition-none active:not-aria-[haspopup]:translate-y-0"
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      size="lg"
+                      disabled={isCommentTooShort}
+                      onClick={handleComment}
+                      className="px-3 transition-none hover:bg-button-primary-hover active:not-aria-[haspopup]:translate-y-0"
+                    >
+                      <SendIcon />
+                      Comment
+                    </Button>
+                  </div>
                 </div>
               </>
             )}

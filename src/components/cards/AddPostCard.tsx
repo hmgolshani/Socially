@@ -43,8 +43,8 @@ const AddPostCard = ({ name, username, image, onSubmit }: AddPostCardProps) => {
   };
 
   return (
-    <div className="rounded-xl border border-layout-border bg-layout-card p-6">
-      <div className="flex gap-4">
+    <div className="rounded-xl border border-layout-border bg-layout-card p-4 sm:p-6">
+      <div className="flex gap-3 sm:gap-4">
         <UserAvatar name={name} username={username} src={image} />
 
         <div className="min-w-0 flex-1">
@@ -100,7 +100,7 @@ const AddPostCard = ({ name, username, image, onSubmit }: AddPostCardProps) => {
 
           <span
             className={cn(
-              "text-xs text-content-secondary tabular-nums",
+              "text-xs whitespace-nowrap text-content-secondary tabular-nums",
               length > 0 && isTooShort && "text-content-red",
             )}
           >
