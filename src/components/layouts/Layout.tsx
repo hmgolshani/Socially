@@ -29,7 +29,7 @@ const Layout = () => {
 
       <div className="mx-auto grid max-w-[1256px] grid-cols-1 gap-3 px-4 py-4 md:grid-cols-[1fr] lg:grid-cols-[220px_minmax(0,1fr)] xl:grid-cols-[294px_550px_356px]">
         <aside className="hidden lg:block">
-          <div className="sticky">
+          <div className="sticky top-20">
             {isAuthenticated ? (
               <SideProfileCard user={currentUser} />
             ) : (
@@ -43,7 +43,7 @@ const Layout = () => {
         </main>
 
         <aside className="hidden xl:block">
-          <div className="sticky">
+          <div className="top-20 sticky">
             {showRecommendedUsers && <RecommendedUserCard />}
           </div>
         </aside>
