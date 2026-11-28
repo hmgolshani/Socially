@@ -4,6 +4,7 @@ import SideProfileCard from "@/components/cards/SideProfileCard.tsx";
 import SideSignInCard from "@/components/cards/SideSignInCard.tsx";
 import RecommendedUserCard from "@/components/cards/recommendedCard/RecommendedUserCard.tsx";
 import { cn } from "cn";
+import { BackToTop } from "@/components/ui/back-to-top.tsx";
 
 const Layout = () => {
   // Delete later :
@@ -29,7 +30,7 @@ const Layout = () => {
 
       <div className="mx-auto grid max-w-[1256px] grid-cols-1 gap-3 px-4 py-4 md:grid-cols-[1fr] lg:grid-cols-[220px_minmax(0,1fr)] xl:grid-cols-[294px_550px_356px]">
         <aside className="hidden lg:block">
-          <div className="sticky">
+          <div className="sticky top-20">
             {isAuthenticated ? (
               <SideProfileCard user={currentUser} />
             ) : (
@@ -43,11 +44,12 @@ const Layout = () => {
         </main>
 
         <aside className="hidden xl:block">
-          <div className="sticky">
+          <div className="top-20 sticky">
             {showRecommendedUsers && <RecommendedUserCard />}
           </div>
         </aside>
       </div>
+      <BackToTop threshold={400} className="bottom-6 right-6 cursor-pointer" />
     </div>
   );
 };

@@ -5,11 +5,12 @@ import {
   SendIcon,
   Trash2Icon,
 } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import UserAvatar from "@/components/ui/UserAvatar.tsx";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import DeletePostModal from "@/components/modals/DeletePostModal.tsx";
+import { MIN_CONTENT_LENGTH } from "@/lib/constants.ts";
 import { formatTimeAgo } from "@/lib/date.ts";
 import { cn } from "@/lib/utils.ts";
 import type { Comment, Post, User } from "@/types/post.ts";
@@ -21,27 +22,31 @@ type PostCardProps = {
   onComment?: (id: string, content: string) => void;
 };
 
-const UserAvatar = ({ user }: { user: User }) => {
+const AuthorAvatar = ({ user }: { user: User }) => {
   return (
-    <Avatar size="lg">
-      <AvatarImage src={user.image} alt={user.name} />
-      <AvatarFallback>{user.name.charAt(0).toUpperCase()}</AvatarFallback>
-    </Avatar>
+    <UserAvatar name={user.name} username={user.username} src={user.image} />
   );
 };
 
 const AuthorInfo = ({ user, createdAt }: { user: User; createdAt: string }) => {
   return (
-    <div className="flex min-w-0 flex-wrap items-center gap-x-2">
-      <span className="truncate font-semibold text-content-primary">
-        {user.name}
-      </span>
-      <span className="truncate text-xs text-content-secondary">
+    <div className="min-w-0">
+      <div className="flex items-center gap-2">
+        <span className="truncate font-semibold text-content-primary">
+          {user.name}
+        </span>
+        <span className="hidden truncate text-xs text-content-secondary sm:inline">
+          @{user.username}
+        </span>
+        <span className="hidden text-xs text-content-secondary sm:inline">
+          •
+        </span>
+        <span className="shrink-0 text-xs text-content-secondary">
+          {formatTimeAgo(createdAt)}
+        </span>
+      </div>
+      <span className="block truncate text-xs text-content-secondary sm:hidden">
         @{user.username}
-      </span>
-      <span className="text-xs text-content-secondary">•</span>
-      <span className="text-xs text-content-secondary">
-        {formatTimeAgo(createdAt)}
       </span>
     </div>
   );
@@ -49,8 +54,8 @@ const AuthorInfo = ({ user, createdAt }: { user: User; createdAt: string }) => {
 
 const CommentItem = ({ comment }: { comment: Comment }) => {
   return (
-    <div className="flex gap-4">
-      <UserAvatar user={comment.author} />
+    <div className="flex gap-3 sm:gap-4">
+      <AuthorAvatar user={comment.author} />
       <div className="min-w-0 flex-1">
         <AuthorInfo user={comment.author} createdAt={comment.createdAt} />
         <p className="mt-1 text-sm break-words whitespace-pre-wrap text-content-primary">
@@ -77,6 +82,8 @@ const PostCard = ({
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   const isOwner = currentUser?.username === post.author.username;
+  const commentLength = comment.trim().length;
+  const isCommentTooShort = commentLength < MIN_CONTENT_LENGTH;
 
   const handleLike = () => {
     setLikes((prev) => (isLiked ? prev - 1 : prev + 1));
@@ -99,9 +106,9 @@ const PostCard = ({
   };
 
   return (
-    <div className="rounded-xl border border-layout-border bg-layout-card p-6">
-      <div className="flex gap-4">
-        <UserAvatar user={post.author} />
+    <div className="rounded-xl border border-layout-border bg-layout-card p-4 sm:p-6">
+      <div className="flex gap-3 sm:gap-4">
+        <AuthorAvatar user={post.author} />
 
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
@@ -109,20 +116,31 @@ const PostCard = ({
 
             {isOwner && (
               <Button
-                variant="destructive"
+                variant="ghost"
                 size="icon-sm"
                 aria-label="Delete post"
                 onClick={() => setIsDeleteOpen(true)}
-                className="transition-none active:not-aria-[haspopup]:translate-y-0"
+                className="shrink-0 text-content-secondary transition-none hover:bg-destructive/10 hover:text-destructive active:not-aria-[haspopup]:translate-y-0 dark:hover:bg-destructive/20"
               >
                 <Trash2Icon />
               </Button>
             )}
           </div>
 
-          <p className="mt-1 text-sm break-words whitespace-pre-wrap text-content-primary">
-            {post.content}
-          </p>
+          {post.content && (
+            <p className="mt-1 text-sm break-words whitespace-pre-wrap text-content-primary">
+              {post.content}
+            </p>
+          )}
+
+          {post.image && (
+            <img
+              src={post.image}
+              alt={`Image posted by ${post.author.name}`}
+              loading="lazy"
+              className="mt-3 aspect-square w-full rounded-xl border border-layout-border object-cover sm:size-80"
+            />
+          )}
         </div>
       </div>
 
@@ -153,8 +171,16 @@ const PostCard = ({
         </Button>
       </div>
 
-      {showComments && (
-        <>
+      <div
+        inert={!showComments}
+        className={cn(
+          "grid transition-[grid-template-rows,opacity] duration-300 ease-out",
+          showComments
+            ? "grid-rows-[1fr] opacity-100"
+            : "grid-rows-[0fr] opacity-0",
+        )}
+      >
+        <div className="overflow-hidden">
           <Separator className="my-4 bg-layout-border" />
 
           <div className="flex flex-col gap-4">
@@ -164,8 +190,8 @@ const PostCard = ({
 
             {currentUser && (
               <>
-                <div className="flex gap-4">
-                  <UserAvatar user={currentUser} />
+                <div className="flex gap-3 sm:gap-4">
+                  <AuthorAvatar user={currentUser} />
                   <Textarea
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
@@ -175,30 +201,44 @@ const PostCard = ({
                   />
                 </div>
 
-                <div className="flex justify-end gap-2">
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    onClick={handleCancelComment}
-                    className="px-3 transition-none active:not-aria-[haspopup]:translate-y-0"
+                <div className="flex flex-wrap items-center justify-end gap-2">
+                  <span
+                    className={cn(
+                      "mr-auto text-xs whitespace-nowrap text-content-secondary tabular-nums",
+                      commentLength > 0 &&
+                        isCommentTooShort &&
+                        "text-content-red",
+                    )}
                   >
-                    Cancel
-                  </Button>
-                  <Button
-                    size="lg"
-                    disabled={comment.trim().length === 0}
-                    onClick={handleComment}
-                    className="px-3 transition-none hover:bg-button-primary-hover active:not-aria-[haspopup]:translate-y-0"
-                  >
-                    <SendIcon />
-                    Comment
-                  </Button>
+                    {commentLength > 0 && isCommentTooShort
+                      ? `${commentLength} characters · min ${MIN_CONTENT_LENGTH}`
+                      : `${commentLength} characters`}
+                  </span>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      onClick={handleCancelComment}
+                      className="px-3 transition-none active:not-aria-[haspopup]:translate-y-0"
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      size="lg"
+                      disabled={isCommentTooShort}
+                      onClick={handleComment}
+                      className="px-3 transition-none hover:bg-button-primary-hover active:not-aria-[haspopup]:translate-y-0"
+                    >
+                      <SendIcon />
+                      Comment
+                    </Button>
+                  </div>
                 </div>
               </>
             )}
           </div>
-        </>
-      )}
+        </div>
+      </div>
 
       {isOwner && (
         <DeletePostModal
