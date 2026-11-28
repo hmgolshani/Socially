@@ -66,10 +66,10 @@ function BackToTop({ threshold = 400, target, className }: BackToTopProps) {
         }
       }}
       className={cn(
-        "bg-raised text-fg shadow-overlay fixed right-5 bottom-5 z-40 grid size-11 place-items-center rounded-full border border-border transition-[opacity,translate] outline-none focus-visible:ring-2 focus-visible:ring-accent",
+        "fixed right-5 bottom-5 z-40 grid size-11 place-items-center rounded-full border border-border bg-layout-card text-content-primary shadow-md transition-[opacity,translate] outline-none focus-visible:ring-2 focus-visible:ring-accent",
         visible
-          ? "ease-hairline translate-y-0 opacity-100 duration-200"
-          : "ease-exit pointer-events-none translate-y-3 opacity-0 duration-[160ms]",
+          ? "translate-y-0 opacity-100 duration-200 ease-out"
+          : "pointer-events-none translate-y-3 opacity-0 duration-[160ms] ease-out",
         className,
       )}
     >
