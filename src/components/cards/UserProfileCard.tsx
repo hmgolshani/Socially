@@ -1,7 +1,7 @@
 import { CalendarDays, SquarePen } from "lucide-react";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import UserAvatar from "@/components/ui/UserAvatar.tsx";
 
 type ProfileActionLabel = "Edit Profile" | "Follow" | "Unfollow";
 
@@ -29,17 +29,17 @@ export default function UserProfileCard({
   onAction,
 }: UserProfileCardProps) {
   const isEditAction = buttonText === "Edit Profile";
-  const initial = displayName.trim().charAt(0).toUpperCase();
 
   return (
     <article className="w-full rounded-xl border border-layout-border bg-layout-card p-6 shadow-sm">
       <div className="flex flex-col items-center text-center">
-        <Avatar className="size-28 after:border-0">
-          <AvatarImage src={avatarUrl ?? undefined} alt={displayName} />
-          <AvatarFallback className="bg-brand-main text-5xl text-content-opposite">
-            {initial || "?"}
-          </AvatarFallback>
-        </Avatar>
+        <UserAvatar
+          name={displayName}
+          username={username}
+          src={avatarUrl}
+          size="xl"
+          className="size-28 text-5xl after:border-0"
+        />
 
         <h1 className="mt-4 text-xl font-semibold text-content-primary">
           {displayName}

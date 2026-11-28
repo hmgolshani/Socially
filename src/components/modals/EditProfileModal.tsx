@@ -50,9 +50,13 @@ function EditProfileForm({
     setValues((current) => ({ ...current, [field]: value }));
   };
 
+  const isNameValid = values.name.trim().length > 0;
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onSave(values);
+    if (!isNameValid) return;
+
+    onSave({ ...values, name: values.name.trim() });
     onClose();
   };
 
@@ -79,6 +83,7 @@ function EditProfileForm({
             autoComplete="name"
             className="h-9 rounded-md"
             id={`${id}-name`}
+            required
             value={values.name}
             onChange={(event) => updateValue("name", event.target.value)}
           />
@@ -120,16 +125,12 @@ function EditProfileForm({
           />
         </Field>
 
-        <div className="flex justify-end gap-3 pt-1">
+        <div className="flex justify-end pt-1">
           <Button
-            className="h-9 rounded-md"
-            type="button"
-            variant="outline"
-            onClick={onClose}
+            className="h-9 min-w-[142px] rounded-md"
+            type="submit"
+            disabled={!isNameValid}
           >
-            Cancel
-          </Button>
-          <Button className="h-9 min-w-[142px] rounded-md" type="submit">
             Save Changes
           </Button>
         </div>
