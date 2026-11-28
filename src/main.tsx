@@ -4,11 +4,13 @@ import "./index.css";
 import App from "@/App.tsx";
 import { BrowserRouter } from "react-router";
 import { ThemeProvider } from "@/components/ThemeProvider.tsx";
+import ScrollRestoration from "@/components/ScrollRestoration.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider defaultTheme="system" storageKey="socially-theme">
       <BrowserRouter>
+        <ScrollRestoration />
         <App />
       </BrowserRouter>
     </ThemeProvider>
